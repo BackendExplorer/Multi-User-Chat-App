@@ -229,14 +229,13 @@ classDiagram
 - `OperationPayload` は操作と状態に応じて異なるフォーマット（整数、文字列、JSONなど）でデコードされる可能性がある
 
 ```mermaid
-%% 見やすいカラーテーマを適用
 graph TD;
     classDef main fill:#f8f9fa,stroke:#6c757d,stroke-width:2px;
     classDef process fill:#ffffff,stroke:#007bff,stroke-width:2px;
     classDef sub_process fill:#e9ecef,stroke:#17a2b8,stroke-width:2px;
     classDef warning fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
     classDef danger fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
-    
+
     subgraph サーバー起動
         class A1,A2,A3,A4,A5,A6,A7 main;
         A1(メインスレッド) -->|TCPサーバー起動| A2(TCPサーバースレッド)
@@ -276,4 +275,9 @@ graph TD;
         D1 -->|サーバーからタイムアウト通知| D4(非アクティブ削除)
         D4 -->|ルーム削除 or メンバー通知| D5(サーバー側で管理)
     end
+
+    %% 縦方向に並べる
+    A1 --> B1
+    A1 --> C1
+    C1 --> D1
 ```
