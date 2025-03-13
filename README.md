@@ -63,9 +63,6 @@
 classDiagram
     direction LR
 
-    class Dummy {
-    }
-
     class TCPServer {
         -HEADER_MAX_BYTE: int
         -TOKEN_MAX_BYTE: int
@@ -98,6 +95,3 @@ classDiagram
         -remove_inactive_clients(): None
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
-
-    Dummy <-- TCPServer
-    Dummy <-- UDPServer
