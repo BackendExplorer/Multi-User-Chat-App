@@ -97,5 +97,5 @@ classDiagram
     }
 
     %% ダミーの関連を定義し、続けて linkStyle で可視化をオフにする
-    TCPServer <.. UDPServer : 
+    TCPServer <.. UDPServer
     linkStyle 0 stroke:none,fill:none
