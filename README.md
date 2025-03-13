@@ -231,25 +231,24 @@ classDiagram
 ```mermaid
 graph TD;
     %% --- カラースタイルの定義 ---
-    classDef server fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;       %% サーバー関連: 青
-    classDef client fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;       %% クライアント関連: 緑
-    classDef messaging fill:#ede7f6,stroke:#6a1b9a,stroke-width:2px;    %% メッセージ処理: 紫
-    classDef warning fill:#ffebee,stroke:#c62828,stroke-width:2px;      %% クライアント退出: 赤
+    classDef server fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;       %% サーバー関連（青）
+    classDef client fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;       %% クライアント関連（緑）
+    classDef messaging fill:#ede7f6,stroke:#6a1b9a,stroke-width:2px;    %% メッセージ処理（紫）
+    classDef warning fill:#ffebee,stroke:#c62828,stroke-width:2px;      %% クライアント退出（赤）
 
     %% --- サーバー起動 ---
     subgraph サーバー起動
-        class A1,A2,A3,A4,A5,A6,A7 server;
         A1(メインスレッド) -->|TCPサーバー起動| A2(TCPサーバースレッド)
         A1 -->|UDPサーバー起動| A3(UDPサーバースレッド)
         A2 -->|クライアント接続待機| A4(クライアント接続受理)
         A4 -->|ルーム作成 / 参加| A5(クライアント情報登録)
         A3 -->|メッセージ処理| A6(メッセージ処理スレッド)
         A3 -->|非アクティブクライアント監視| A7(監視スレッド)
+        class A1,A2,A3,A4,A5,A6,A7 server;
     end
 
     %% --- クライアント起動とサーバー接続 ---
     subgraph クライアント起動とサーバー接続
-        class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 client;
         B1(クライアント実行) -->|TCPクライアント起動| B2(TCPクライアント)
         B2 -->|サーバー接続| B3(接続成功)
         B3 -->|ユーザー名入力| B4(ユーザー名取得)
@@ -260,24 +259,25 @@ graph TD;
         B8 -->|サーバーへ送信| B9(サーバーからトークン受信)
         B2 -->|UDPクライアント起動| B10(UDPクライアント)
         B10 -->|ルーム情報送信| B11(メッセージ送受信開始)
+        class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 client;
     end
 
     %% --- サーバーでのメッセージ処理 ---
     subgraph サーバーでのメッセージ処理
-        class C1,C2,C3,C4,C5 messaging;
         C1(UDPサーバー) -->|メッセージ受信| C2(クライアントから受信)
         C2 -->|解析&ブロードキャスト| C3(ルーム内メンバーへ送信)
         C1 -->|非アクティブ監視| C4(非アクティブチェック)
         C4 -->|タイムアウト処理| C5(クライアント削除 & ルーム管理)
+        class C1,C2,C3,C4,C5 messaging;
     end
 
     %% --- クライアント退出処理 ---
     subgraph クライアント退出処理
-        class D1,D2,D3,D4,D5 warning;
         D1(クライアント) -->|ユーザーが exit 入力| D2(UDPメッセージ 'exit!')
         D2 -->|ソケットを閉じる| D3(プログラム終了)
         D1 -->|サーバーからタイムアウト通知| D4(非アクティブ削除)
         D4 -->|ルーム削除 or メンバー通知| D5(サーバー側で管理)
+        class D1,D2,D3,D4,D5 warning;
     end
 
     %% --- フローチャートのレイアウト改善 ---
