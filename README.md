@@ -230,15 +230,15 @@ classDiagram
 
 ```mermaid
 graph TD;
-    classDef main fill:#f8f9fa,stroke:#6c757d,stroke-width:2px;
-    classDef process fill:#ffffff,stroke:#007bff,stroke-width:2px;
-    classDef sub_process fill:#e9ecef,stroke:#17a2b8,stroke-width:2px;
-    classDef warning fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
-    classDef danger fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+    %% --- カラースタイルの定義 ---
+    classDef server fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;       %% サーバー関連: 青
+    classDef client fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;       %% クライアント関連: 緑
+    classDef messaging fill:#ede7f6,stroke:#6a1b9a,stroke-width:2px;    %% メッセージ処理: 紫
+    classDef warning fill:#ffebee,stroke:#c62828,stroke-width:2px;      %% クライアント退出: 赤
 
     %% --- サーバー起動 ---
     subgraph サーバー起動
-        class A1,A2,A3,A4,A5,A6,A7 main;
+        class A1,A2,A3,A4,A5,A6,A7 server;
         A1(メインスレッド) -->|TCPサーバー起動| A2(TCPサーバースレッド)
         A1 -->|UDPサーバー起動| A3(UDPサーバースレッド)
         A2 -->|クライアント接続待機| A4(クライアント接続受理)
@@ -249,7 +249,7 @@ graph TD;
 
     %% --- クライアント起動とサーバー接続 ---
     subgraph クライアント起動とサーバー接続
-        class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 process;
+        class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 client;
         B1(クライアント実行) -->|TCPクライアント起動| B2(TCPクライアント)
         B2 -->|サーバー接続| B3(接続成功)
         B3 -->|ユーザー名入力| B4(ユーザー名取得)
@@ -264,7 +264,7 @@ graph TD;
 
     %% --- サーバーでのメッセージ処理 ---
     subgraph サーバーでのメッセージ処理
-        class C1,C2,C3,C4,C5 sub_process;
+        class C1,C2,C3,C4,C5 messaging;
         C1(UDPサーバー) -->|メッセージ受信| C2(クライアントから受信)
         C2 -->|解析&ブロードキャスト| C3(ルーム内メンバーへ送信)
         C1 -->|非アクティブ監視| C4(非アクティブチェック)
