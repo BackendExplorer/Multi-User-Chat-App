@@ -230,57 +230,58 @@ classDiagram
 
 ```mermaid
 graph TD;
-    %% --- カラースタイルの定義 ---
-    classDef server fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;       %% サーバー関連（青）
-    classDef client fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;       %% クライアント関連（緑）
-    classDef messaging fill:#ede7f6,stroke:#6a1b9a,stroke-width:2px;    %% メッセージ処理（紫）
-    classDef warning fill:#ffebee,stroke:#c62828,stroke-width:2px;      %% クライアント退出（赤）
+    %% Color style definitions (Server:blue, Client:green, Messaging:purple, Exit:red)
 
-    %% --- サーバー起動 ---
+    classDef server fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;       %% server (blue)
+    classDef client fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;       %% client (green)
+    classDef messaging fill:#ede7f6,stroke:#6a1b9a,stroke-width:2px;    %% messaging (purple)
+    classDef warning fill:#ffebee,stroke:#c62828,stroke-width:2px;      %% exit/timeout (red)
+
+    %% --- Server Startup ---
     subgraph サーバー起動
-        A1(メインスレッド) -->|TCPサーバー起動| A2(TCPサーバースレッド)
-        A1 -->|UDPサーバー起動| A3(UDPサーバースレッド)
-        A2 -->|クライアント接続待機| A4(クライアント接続受理)
-        A4 -->|ルーム作成 / 参加| A5(クライアント情報登録)
-        A3 -->|メッセージ処理| A6(メッセージ処理スレッド)
-        A3 -->|非アクティブクライアント監視| A7(監視スレッド)
+        A1(Main Thread) -->|Start TCP Server| A2(TCP Server Thread)
+        A1 -->|Start UDP Server| A3(UDP Server Thread)
+        A2 -->|Waiting for Client| A4(Client Connection Accepted)
+        A4 -->|Create/Join Room| A5(Register Client)
+        A3 -->|Message Handling| A6(Message Thread)
+        A3 -->|Inactive Monitoring| A7(Monitor Thread)
         class A1,A2,A3,A4,A5,A6,A7 server;
     end
 
-    %% --- クライアント起動とサーバー接続 ---
+    %% --- Client Startup & Connection ---
     subgraph クライアント起動とサーバー接続
-        B1(クライアント実行) -->|TCPクライアント起動| B2(TCPクライアント)
-        B2 -->|サーバー接続| B3(接続成功)
-        B3 -->|ユーザー名入力| B4(ユーザー名取得)
-        B4 -->|操作選択| B5(1:ルーム作成 or 2:ルーム参加)
-        B5 -->|ルーム作成| B6(ルーム作成処理)
-        B6 -->|サーバーへ送信| B7(サーバーからトークン受信)
-        B5 -->|ルーム参加| B8(ルーム参加処理)
-        B8 -->|サーバーへ送信| B9(サーバーからトークン受信)
-        B2 -->|UDPクライアント起動| B10(UDPクライアント)
-        B10 -->|ルーム情報送信| B11(メッセージ送受信開始)
+        B1(Client Run) -->|Start TCP Client| B2(TCP Client)
+        B2 -->|Connect Server| B3(Connection Success)
+        B3 -->|Enter Username| B4(Get Username)
+        B4 -->|Select Operation| B5(Create or Join Room)
+        B5 -->|Create Room| B6(Create Room Process)
+        B6 -->|Send to Server| B7(Receive Token)
+        B5 -->|Join Room| B8(Join Room Process)
+        B8 -->|Send to Server| B9(Receive Token)
+        B2 -->|Start UDP Client| B10(UDP Client)
+        B10 -->|Send Room Info| B11(Start Chat)
         class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 client;
     end
 
-    %% --- サーバーでのメッセージ処理 ---
+    %% --- Server Messaging ---
     subgraph サーバーでのメッセージ処理
-        C1(UDPサーバー) -->|メッセージ受信| C2(クライアントから受信)
-        C2 -->|解析&ブロードキャスト| C3(ルーム内メンバーへ送信)
-        C1 -->|非アクティブ監視| C4(非アクティブチェック)
-        C4 -->|タイムアウト処理| C5(クライアント削除 & ルーム管理)
+        C1(UDP Server) -->|Receive Message| C2(Receive from Client)
+        C2 -->|Parse & Broadcast| C3(Broadcast to Room)
+        C1 -->|Monitor Inactivity| C4(Inactive Check)
+        C4 -->|Timeout| C5(Kick & Manage Room)
         class C1,C2,C3,C4,C5 messaging;
     end
 
-    %% --- クライアント退出処理 ---
+    %% --- Client Exit ---
     subgraph クライアント退出処理
-        D1(クライアント) -->|ユーザーが exit 入力| D2(UDPメッセージ 'exit!')
-        D2 -->|ソケットを閉じる| D3(プログラム終了)
-        D1 -->|サーバーからタイムアウト通知| D4(非アクティブ削除)
-        D4 -->|ルーム削除 or メンバー通知| D5(サーバー側で管理)
+        D1(Client) -->|User typed exit| D2(UDP 'exit!' Message)
+        D2 -->|Close Socket| D3(Program End)
+        D1 -->|Server Timeout Notice| D4(Timeout Removal)
+        D4 -->|Delete Room or Notify| D5(Server Management)
         class D1,D2,D3,D4,D5 warning;
     end
 
-    %% --- フローチャートのレイアウト改善 ---
+    %% --- Layout Improvement ---
     A1 --> B1
     B1 --> C1
     C1 --> D1
