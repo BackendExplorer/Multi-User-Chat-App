@@ -96,5 +96,6 @@ classDiagram
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
 
+    %% ダミーの関連を定義し、続けて linkStyle で線を不可視にする
     TCPServer <.. UDPServer
-    linkStyle 0 stroke-width:0px
+    linkStyle 0 stroke:transparent,stroke-width:0px;
