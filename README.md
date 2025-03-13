@@ -94,15 +94,10 @@ classDiagram
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
 
-    class ChatRoom {
-        -chat_room_list: dict
-        +__init__(): None
-        +create_chat_room(room_name: str, username: str, host_token: str, client_address: tuple): None
-        +add_member_to_chatroom(room_name: str, member_token: str, client_address: tuple): None
-        +remove_member_from_chatroom(room_name: str, member_token: str, client_address: tuple): None
-        +remove_chatroom(room_name: str, member_token: str, client_address: tuple): None
+    class Main {
+        +__main__()
     }
 
     TCPServer "1" -- "1" UDPServer
-    TCPServer o-- ChatRoom
-    UDPServer o-- ChatRoom
+    Main --> TCPServer
+    Main --> UDPServer
