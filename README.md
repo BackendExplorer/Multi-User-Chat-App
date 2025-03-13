@@ -53,12 +53,6 @@
 
 ### 1. server.pyのクラス図
 ```mermaid
-%%{
-  init: {
-    "theme": "default",
-    "themeCSS": ".mermaid .mermaid-btn { margin-top: 48px !important; }"
-  }
-}%%
 classDiagram
     direction LR
 
@@ -96,16 +90,9 @@ classDiagram
         -remove_inactive_clients(): None
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
-
 ```
 ### 2. client.pyのクラス図
 ```mermaid
-%%{
-  init: {
-    "theme": "default",
-    "themeCSS": ".mermaid .mermaid-btn { margin-top: 48px !important; }"
-  }
-}%%
 classDiagram
     direction LR
 
