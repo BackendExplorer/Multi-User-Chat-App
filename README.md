@@ -229,8 +229,16 @@ classDiagram
 - `OperationPayload` は操作と状態に応じて異なるフォーマット（整数、文字列、JSONなど）でデコードされる可能性がある
 
 ```mermaid
+%% 見やすいカラーテーマを適用
 graph TD;
+    classDef main fill:#f8f9fa,stroke:#6c757d,stroke-width:2px;
+    classDef process fill:#ffffff,stroke:#007bff,stroke-width:2px;
+    classDef sub_process fill:#e9ecef,stroke:#17a2b8,stroke-width:2px;
+    classDef warning fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
+    classDef danger fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+    
     subgraph サーバー起動
+        class A1,A2,A3,A4,A5,A6,A7 main;
         A1(メインスレッド) -->|TCPサーバー起動| A2(TCPサーバースレッド)
         A1 -->|UDPサーバー起動| A3(UDPサーバースレッド)
         A2 -->|クライアント接続待機| A4(クライアント接続受理)
@@ -240,6 +248,7 @@ graph TD;
     end
 
     subgraph クライアント起動とサーバー接続
+        class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 process;
         B1(クライアント実行) -->|TCPクライアント起動| B2(TCPクライアント)
         B2 -->|サーバー接続| B3(接続成功)
         B3 -->|ユーザー名入力| B4(ユーザー名取得)
@@ -253,6 +262,7 @@ graph TD;
     end
 
     subgraph サーバーでのメッセージ処理
+        class C1,C2,C3,C4,C5 sub_process;
         C1(UDPサーバー) -->|メッセージ受信| C2(クライアントから受信)
         C2 -->|解析&ブロードキャスト| C3(ルーム内メンバーへ送信)
         C1 -->|非アクティブ監視| C4(非アクティブチェック)
@@ -260,6 +270,7 @@ graph TD;
     end
 
     subgraph クライアント退出処理
+        class D1,D2,D3,D4,D5 warning;
         D1(クライアント) -->|ユーザーが exit 入力| D2(UDPメッセージ 'exit!')
         D2 -->|ソケットを閉じる| D3(プログラム終了)
         D1 -->|サーバーからタイムアウト通知| D4(非アクティブ削除)
