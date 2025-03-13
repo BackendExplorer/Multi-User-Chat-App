@@ -61,6 +61,8 @@
 ## 1. server
 ```mermaid
 classDiagram
+    direction LR
+
     class TCPServer {
         -HEADER_MAX_BYTE: int
         -TOKEN_MAX_BYTE: int
