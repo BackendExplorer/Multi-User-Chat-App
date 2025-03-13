@@ -248,9 +248,6 @@ C1 --> D1
 
 # バイト情報
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/f1e74d11-b876-4ad3-87ab-e1e1989c8b94" width="60%">
-</p>
 
 
 
