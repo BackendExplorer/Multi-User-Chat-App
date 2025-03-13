@@ -55,3 +55,50 @@
 ## 💡 さらに追加したい機能
 
 ## 📄 参考文献
+
+
+"""```mermaid
+classDiagram
+    class TCPServer {
+        -HEADER_MAX_BYTE: int
+        -TOKEN_MAX_BYTE: int
+        -server_address: str
+        -server_port: int
+        -sock: socket
+        -room_members_map: dict
+        -clients_map: dict
+        +__init__(server_address: str, server_port: int)
+        +start_tcp_server(): None
+        -accept_tcp_connections(): None
+        -handle_client_request(connection: socket, client_address: tuple): None
+        -decode_message(data: bytes): tuple
+        -register_client(token: bytes, client_address: tuple, room_name: str, payload: str, operation: int): None
+        -create_room(connection: socket, room_name: str, payload: str, token: bytes): None
+        -join_room(connection: socket, room_name: str, payload: str, token: bytes): None
+    }
+
+    class UDPServer {
+        -server_address: str
+        -server_port: int
+        -room_members_map: dict
+        -clients_map: dict
+        -sock: socket
+        +__init__(server_address: str, server_port: int)
+        +start_udp_server(): None
+        -handle_messages(): None
+        -decode_message(data: bytes): tuple
+        -broadcast_message(room_name: str, message: str): None
+        -remove_inactive_clients(): None
+        -disconnect_inactive_client(client_token: bytes, client_info: list): None
+    }
+
+    class Main {
+        +__main__()
+    }
+
+    TCPServer "1" -- "1" UDPServer
+    Main --> TCPServer
+    Main --> UDPServer
+```
+"""
+
