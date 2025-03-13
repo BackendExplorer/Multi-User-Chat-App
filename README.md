@@ -147,49 +147,22 @@ classDiagram
 
 # バイト情報
 
-<div style="display: flex;">
+## RoomNameSize
+| データ名 | RoomNameSize |
+|----------|--------------|
+| 説明 | ルームの許容人数 |
+| バイト数 | 1バイト |
+| 型 | `byte_int (0-255)` |
 
-<table>
-  <tr>
-    <th colspan="2">RoomNameSize</th>
-  </tr>
-  <tr>
-    <td>説明</td>
-    <td>ルームの許容人数</td>
-  </tr>
-  <tr>
-    <td>バイト数</td>
-    <td>1バイト</td>
-  </tr>
-  <tr>
-    <td>型</td>
-    <td><code>byte_int (0-255)</code></td>
-  </tr>
-</table>
+---
 
-<table style="margin-left: 20px;">
-  <tr>
-    <th colspan="2">Operation</th>
-  </tr>
-  <tr>
-    <td>説明</td>
-    <td>操作コードのこと</td>
-  </tr>
-  <tr>
-    <td>状態</td>
-    <td>1：ルームを作成する <br> 2：ルームに参加したい</td>
-  </tr>
-  <tr>
-    <td>バイト数</td>
-    <td>1バイト</td>
-  </tr>
-  <tr>
-    <td>型</td>
-    <td><code>byte_int (0-255)</code></td>
-  </tr>
-</table>
-
-</div>
+## Operation
+| データ名 | Operation |
+|----------|--------------|
+| 説明 | 操作コードのこと |
+| 状態 | 1：ルームを作成する  <br> 2：ルームに参加したい |
+| バイト数 | 1バイト |
+| 型 | `byte_int (0-255)` |
 
 ---
 
@@ -236,10 +209,5 @@ classDiagram
     "state": 0,
     "roomName": "ChatRoom01"
 }
-```
 
----
 
-## 文字列の扱いについて
-- `RoomName` は **UTF-8** でエンコード/デコードされる
-- `OperationPayload` は操作と状態に応じて異なるフォーマット（整数、文字列、JSONなど）でデコードされる可能性がある
