@@ -95,5 +95,3 @@ classDiagram
         -remove_inactive_clients(): None
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
-
-    TCPServer "1" -- "1" UDPServer
