@@ -1,10 +1,12 @@
-<div style="background: linear-gradient(to right, #e0f7fa, #80deea); padding: 20px; border-radius: 8px; text-align: center;">
-  <h1 style="font-size: 40px; color: #00796B; margin: 0;">Real Time Messaging App 💬</h1>
-  <h2 style="font-size: 24px; color: #004D40; margin-top: 20px;">📌 目次</h2>
-  <p style="font-size: 16px; color: #00796B;">このドキュメントの目次です。各セクションへジャンプできます。</p>
-  <hr style="border: none; border-top: 2px dashed #00796B; width: 80%; margin: 20px auto;">
-</div>
+<h1 style="font-size: 40px; text-align: center; color: #4CAF50;">Real Time Messaging App 💬</h1>
 
+
+
+
+
+# 📌 目次
+
+ **このドキュメントの目次です。各セクションへジャンプできます。**
 
 <hr style="border: 3px solid black;">
 
