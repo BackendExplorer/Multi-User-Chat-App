@@ -1,4 +1,5 @@
-#  **Real Time Messaging App　💬**  
+<h1 style="font-size: 3em; text-align: center; color: #4CAF50;">Real Time Messaging App 💬</h1>
+
 
 
 
