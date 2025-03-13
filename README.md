@@ -97,3 +97,44 @@ classDiagram
         -remove_inactive_clients(): None
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
+```
+
+```mermaid
+classDiagram
+    direction LR
+
+    TCPClient -- UDPClient
+
+    class TCPClient {
+        -server_address: str
+        -server_port: int
+        -sock: socket
+        -client_info: dict
+        +__init__(server_address: str, server_port: int)
+        +start_tcp_client(): dict
+        -connect_to_server(): None
+        -input_user_name(): str
+        -input_operation(): int
+        -create_room(username: str): tuple
+        -input_room_name(operation: int): str
+        -create_packet(room_name: str, operation: int, state: int, payload: str): bytes
+        -create_header(room_name: str, operation: int, state: int, payload: str): bytes
+        -join_room(username: str): tuple
+    }
+
+    class UDPClient {
+        -server_address: str
+        -server_port: int
+        -sock: socket
+        -my_info: dict
+        -my_token: bytes
+        -room_name: str
+        +__init__(server_address: str, server_port: int, my_info: dict)
+        +start_udp_chat(): None
+        -send_username(): None
+        -send_message(): None
+        -receive_message(): None
+        -create_packet(message: bytes = b""): bytes
+    }
+
+```
