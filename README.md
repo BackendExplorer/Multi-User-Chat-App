@@ -56,8 +56,10 @@
 
 ## 📄 参考文献
 
+# クラス図
 
-"""```mermaid
+## 1. server
+```mermaid
 classDiagram
     class TCPServer {
         -HEADER_MAX_BYTE: int
@@ -92,13 +94,15 @@ classDiagram
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
 
-    class Main {
-        +__main__()
+    class ChatRoom {
+        -chat_room_list: dict
+        +__init__(): None
+        +create_chat_room(room_name: str, username: str, host_token: str, client_address: tuple): None
+        +add_member_to_chatroom(room_name: str, member_token: str, client_address: tuple): None
+        +remove_member_from_chatroom(room_name: str, member_token: str, client_address: tuple): None
+        +remove_chatroom(room_name: str, member_token: str, client_address: tuple): None
     }
 
     TCPServer "1" -- "1" UDPServer
-    Main --> TCPServer
-    Main --> UDPServer
-```
-"""
-
+    TCPServer o-- ChatRoom
+    UDPServer o-- ChatRoom
