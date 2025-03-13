@@ -95,3 +95,7 @@ classDiagram
         -remove_inactive_clients(): None
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
+
+    %% ダミーの関連を定義し、続けて linkStyle で可視化をオフにする
+    TCPServer <.. UDPServer : 
+    linkStyle 0 stroke:none,fill:none
