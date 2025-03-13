@@ -56,9 +56,9 @@
 
 ## 📄 参考文献
 
-# クラス図
 
-## 1. server
+
+## 1. server.pyのクラス図
 ```mermaid
 classDiagram
     direction LR
@@ -98,7 +98,7 @@ classDiagram
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
 ```
-
+## 2. client.pyのクラス図
 ```mermaid
 classDiagram
     direction LR
