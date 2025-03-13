@@ -236,6 +236,7 @@ graph TD;
     classDef warning fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
     classDef danger fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
 
+    %% --- サーバー起動 ---
     subgraph サーバー起動
         class A1,A2,A3,A4,A5,A6,A7 main;
         A1(メインスレッド) -->|TCPサーバー起動| A2(TCPサーバースレッド)
@@ -246,6 +247,7 @@ graph TD;
         A3 -->|非アクティブクライアント監視| A7(監視スレッド)
     end
 
+    %% --- クライアント起動とサーバー接続 ---
     subgraph クライアント起動とサーバー接続
         class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 process;
         B1(クライアント実行) -->|TCPクライアント起動| B2(TCPクライアント)
@@ -260,6 +262,7 @@ graph TD;
         B10 -->|ルーム情報送信| B11(メッセージ送受信開始)
     end
 
+    %% --- サーバーでのメッセージ処理 ---
     subgraph サーバーでのメッセージ処理
         class C1,C2,C3,C4,C5 sub_process;
         C1(UDPサーバー) -->|メッセージ受信| C2(クライアントから受信)
@@ -268,6 +271,7 @@ graph TD;
         C4 -->|タイムアウト処理| C5(クライアント削除 & ルーム管理)
     end
 
+    %% --- クライアント退出処理 ---
     subgraph クライアント退出処理
         class D1,D2,D3,D4,D5 warning;
         D1(クライアント) -->|ユーザーが exit 入力| D2(UDPメッセージ 'exit!')
@@ -276,8 +280,8 @@ graph TD;
         D4 -->|ルーム削除 or メンバー通知| D5(サーバー側で管理)
     end
 
-    %% 縦方向に並べる
+    %% --- フローチャートのレイアウト改善 ---
     A1 --> B1
-    A1 --> C1
+    B1 --> C1
     C1 --> D1
 ```
