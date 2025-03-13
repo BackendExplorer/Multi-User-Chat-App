@@ -248,43 +248,11 @@ C1 --> D1
 
 # バイト情報
 
-<table>
-  <tr>
-    <th>データ名</th>
-    <th>説明</th>
-    <th>状態</th>
-    <th>バイト数</th>
-    <th>型</th>
-  </tr>
-  <tr>
-    <td><strong>RoomNameSize</strong></td>
-    <td>ルームの許容人数</td>
-    <td>-</td>
-    <td>1バイト</td>
-    <td><code>byte_int (0-255)</code></td>
-  </tr>
-  <tr>
-    <td><strong>Operation</strong></td>
-    <td>操作コードのこと</td>
-    <td>1：ルームを作成する <br> 2：ルームに参加したい</td>
-    <td>1バイト</td>
-    <td><code>byte_int (0-255)</code></td>
-  </tr>
-  <tr>
-    <td><strong>State</strong></td>
-    <td>現在の状態のこと</td>
-    <td>0：サーバの初期化（ルーム作成要求） <br> 1：リクエストの応答（ルーム作成中） <br> 2：リクエストの完了（ルーム作成完了）</td>
-    <td>1バイト</td>
-    <td><code>byte_int (0-255)</code></td>
-  </tr>
-  <tr>
-    <td><strong>OperationPayloadSize</strong></td>
-    <td>データ本体のこと</td>
-    <td>-</td>
-    <td>29バイト（RoomName: 8バイト + OperationPayload: 21バイト）</td>
-    <td><code>byte_str</code></td>
-  </tr>
-</table>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f1e74d11-b876-4ad3-87ab-e1e1989c8b94" width="100%">
+</p>
+
+
 
 ---
 
