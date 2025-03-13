@@ -140,6 +140,7 @@ classDiagram
 ## 💡 さらに追加したい機能
 
 ## 📄 参考文献
-![Uploading スクリーンショット 2025-03-14 2.35.38.png…]()
+<img width="593" alt="スクリーンショット 2025-03-14 2 35 38" src="https://github.com/user-attachments/assets/ddcc42c1-bd8e-4c2c-9f4a-ebfede2fc6ce" />
+
 
 
