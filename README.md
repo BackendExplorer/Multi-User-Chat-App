@@ -63,8 +63,6 @@
 classDiagram
     direction LR
 
-    TCPServer -- UDPServer
-
     class TCPServer {
         -HEADER_MAX_BYTE: int
         -TOKEN_MAX_BYTE: int
