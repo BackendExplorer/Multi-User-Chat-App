@@ -242,7 +242,7 @@ C1 --> D1
 
 ## 📄 参考文献
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/5d2a405b-8444-4e73-a5be-d3740a1641d7" width="100%">
+  <img src="https://github.com/user-attachments/assets/43766c52-7a68-4d7e-852d-18bf48755f78" width="100%">
 </p>
 
 
