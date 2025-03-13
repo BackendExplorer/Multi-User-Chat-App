@@ -147,68 +147,43 @@ classDiagram
 
 # バイト情報
 
-<div style="display: flex;">
-
 <table>
   <tr>
-    <th colspan="2">RoomNameSize</th>
+    <th>データ名</th>
+    <th>説明</th>
+    <th>状態</th>
+    <th>バイト数</th>
+    <th>型</th>
   </tr>
   <tr>
-    <td>説明</td>
+    <td><strong>RoomNameSize</strong></td>
     <td>ルームの許容人数</td>
-  </tr>
-  <tr>
-    <td>バイト数</td>
+    <td>-</td>
     <td>1バイト</td>
-  </tr>
-  <tr>
-    <td>型</td>
     <td><code>byte_int (0-255)</code></td>
   </tr>
-</table>
-
-<table style="margin-left: 20px;">
   <tr>
-    <th colspan="2">Operation</th>
-  </tr>
-  <tr>
-    <td>説明</td>
+    <td><strong>Operation</strong></td>
     <td>操作コードのこと</td>
-  </tr>
-  <tr>
-    <td>状態</td>
     <td>1：ルームを作成する <br> 2：ルームに参加したい</td>
-  </tr>
-  <tr>
-    <td>バイト数</td>
     <td>1バイト</td>
-  </tr>
-  <tr>
-    <td>型</td>
     <td><code>byte_int (0-255)</code></td>
   </tr>
+  <tr>
+    <td><strong>State</strong></td>
+    <td>現在の状態のこと</td>
+    <td>0：サーバの初期化（ルーム作成要求） <br> 1：リクエストの応答（ルーム作成中） <br> 2：リクエストの完了（ルーム作成完了）</td>
+    <td>1バイト</td>
+    <td><code>byte_int (0-255)</code></td>
+  </tr>
+  <tr>
+    <td><strong>OperationPayloadSize</strong></td>
+    <td>データ本体のこと</td>
+    <td>-</td>
+    <td>29バイト（RoomName: 8バイト + OperationPayload: 21バイト）</td>
+    <td><code>byte_str</code></td>
+  </tr>
 </table>
-
-</div>
-
----
-
-## State
-| データ名 | State |
-|----------|--------------|
-| 説明 | 現在の状態のこと |
-| 状態 | 0：サーバの初期化（ルーム作成要求） <br> 1：リクエストの応答（ルーム作成中） <br> 2：リクエストの完了（ルーム作成完了） |
-| バイト数 | 1バイト |
-| 型 | `byte_int (0-255)` |
-
----
-
-## OperationPayloadSize
-| データ名 | OperationPayloadSize |
-|----------|----------------------|
-| 説明 | データ本体のこと |
-| バイト数 | 29バイト（RoomName: 8バイト + OperationPayload: 21バイト） |
-| 型 | `byte_str` |
 
 ---
 
