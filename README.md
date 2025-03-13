@@ -63,8 +63,7 @@
 classDiagram
     direction LR
 
-    TCPServer --|> DummyClass
-    UDPServer --|> DummyClass
+    TCPServer -- UDPServer
 
     class TCPServer {
         -HEADER_MAX_BYTE: int
@@ -97,8 +96,4 @@ classDiagram
         -broadcast_message(room_name: str, message: str): None
         -remove_inactive_clients(): None
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
-    }
-
-    class DummyClass {
-        <<dummy>>
     }
