@@ -63,6 +63,8 @@
 classDiagram
     direction LR
 
+    TCPServer -- UDPServer
+
     class TCPServer {
         -HEADER_MAX_BYTE: int
         -TOKEN_MAX_BYTE: int
@@ -101,6 +103,8 @@ classDiagram
 classDiagram
     direction LR
 
+    TCPClient -- UDPClient
+
     class TCPClient {
         -server_address: str
         -server_port: int
@@ -132,4 +136,5 @@ classDiagram
         -receive_message(): None
         -create_packet(message: bytes = b""): bytes
     }
+
 ```
