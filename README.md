@@ -96,10 +96,4 @@ classDiagram
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
 
-    class Main {
-        +__main__()
-    }
-
     TCPServer "1" -- "1" UDPServer
-    Main --> TCPServer
-    Main --> UDPServer
