@@ -180,7 +180,7 @@ C1 --> D1
 ### 📍 server.py のクラス図
 ```mermaid
 classDiagram
-direction TD
+direction LR
 
 TCPServer -- UDPServer
 
@@ -221,7 +221,7 @@ class UDPServer {
 ### 📍 client.py のクラス図
 ```mermaid
 classDiagram
-direction TD
+direction LR
 
 TCPClient -- UDPClient
 
