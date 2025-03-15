@@ -63,7 +63,7 @@
 ## 🔀処理フロー (フローチャート)
 
 ```mermaid
-%%{init: {'themeVariables': {'scale': 0.8}}}%%
+%%{init: {'themeVariables': {'scale': 0.5}}}%%
 graph TD
     A[CLI起動] --> B[サーバーに接続]
     B -->|ルーム作成| C[ルーム名を入力]
