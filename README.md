@@ -148,9 +148,98 @@ classDiagram
     }
 ```
 
+---# クラス図と構成
+
+このプロジェクトは、**TCP/UDP通信を用いたチャットシステム** を構成するクラス群で成り立っています。サーバーとクライアントでそれぞれの役割を持ち、以下のように分類されます。
+
 ---
 
-## 2 クラスの構成
+## クラス図
+
+### server.py のクラス図
+```mermaid
+classDiagram
+    direction LR
+
+    TCPServer -- UDPServer
+
+    class TCPServer {
+        - HEADER_MAX_BYTE: int
+        - TOKEN_MAX_BYTE: int
+        - server_address: str
+        - server_port: int
+        - sock: socket
+        - room_members_map: dict
+        - clients_map: dict
+        + __init__(server_address: str, server_port: int)
+        + start_tcp_server(): None
+        - accept_tcp_connections(): None
+        - handle_client_request(connection: socket, client_address: tuple): None
+        - decode_message(data: bytes): tuple
+        - register_client(token: bytes, client_address: tuple, room_name: str, payload: str, operation: int): None
+        - create_room(connection: socket, room_name: str, payload: str, token: bytes): None
+        - join_room(connection: socket, room_name: str, payload: str, token: bytes): None
+    }
+
+    class UDPServer {
+        - server_address: str
+        - server_port: int
+        - room_members_map: dict
+        - clients_map: dict
+        - sock: socket
+        + __init__(server_address: str, server_port: int)
+        + start_udp_server(): None
+        - handle_messages(): None
+        - decode_message(data: bytes): tuple
+        - broadcast_message(room_name: str, message: str): None
+        - remove_inactive_clients(): None
+        - disconnect_inactive_client(client_token: bytes, client_info: list): None
+    }
+```
+
+### client.py のクラス図
+```mermaid
+classDiagram
+    direction LR
+
+    TCPClient -- UDPClient
+
+    class TCPClient {
+        - server_address: str
+        - server_port: int
+        - sock: socket
+        - client_info: dict
+        + __init__(server_address: str, server_port: int)
+        + start_tcp_client(): dict
+        - connect_to_server(): None
+        - input_user_name(): str
+        - input_operation(): int
+        - create_room(username: str): tuple
+        - input_room_name(operation: int): str
+        - create_packet(room_name: str, operation: int, state: int, payload: str): bytes
+        - create_header(room_name: str, operation: int, state: int, payload: str): bytes
+        - join_room(username: str): tuple
+    }
+
+    class UDPClient {
+        - server_address: str
+        - server_port: int
+        - sock: socket
+        - my_info: dict
+        - my_token: bytes
+        - room_name: str
+        + __init__(server_address: str, server_port: int, my_info: dict)
+        + start_udp_chat(): None
+        - send_username(): None
+        - send_message(): None
+        - receive_message(): None
+        - create_packet(message: bytes = b"" ): bytes
+    }
+```
+
+---
+
+## クラスの構成
 
 ### サーバープログラム
 サーバー側のクラスは、**クライアントの接続管理、リクエスト処理、ルーム管理** などを担当します。
@@ -209,18 +298,10 @@ UDP通信を介してメッセージを送受信します。
 
 ---
 
-この構成をもとに、**シンプルかつ効率的なTCP/UDPチャットシステム** を実現しています。
-
-
-## 🔀処理フロー (フローチャート)
+## 処理フロー (フローチャート)
 
 ```mermaid
 graph TD
-
-classDef server fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px
-classDef client fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-classDef messaging fill:#ede7f6,stroke:#6a1b9a,stroke-width:2px
-classDef warning fill:#ffebee,stroke:#c62828,stroke-width:2px
 
 subgraph Server Startup
     A1(Main Thread)
@@ -230,15 +311,12 @@ subgraph Server Startup
     A5(Register Client)
     A6(Message Thread)
     A7(Monitor Thread)
-
     A1 -->|Start TCP Server| A2
     A1 -->|Start UDP Server| A3
     A2 -->|Waiting for Client| A4
     A4 -->|Create/Join Room| A5
     A3 -->|Message Handling| A6
     A3 -->|Inactive Monitoring| A7
-
-    class A1,A2,A3,A4,A5,A6,A7 server
 end
 
 subgraph Client Startup
@@ -253,55 +331,18 @@ subgraph Client Startup
     B9(Receive Token)
     B10(UDP Client)
     B11(Start Chat)
-
-    B1 -->|Start TCP Client| B2
-    B2 -->|Connect Server| B3
-    B3 -->|Enter Username| B4
-    B4 -->|Select Operation| B5
-    B5 -->|Create Room| B6
-    B6 -->|Send to Server| B7
-    B5 -->|Join Room| B8
-    B8 -->|Send to Server| B9
-    B2 -->|Start UDP Client| B10
-    B10 -->|Send Room Info| B11
-
-    class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11 client
-end
-
-subgraph Server Message Handling
-    C1(UDP Server)
-    C2(Receive from Client)
-    C3(Broadcast to Room)
-    C4(Inactive Check)
-    C5(Kick & Manage Room)
-
-    C1 -->|Receive Message| C2
-    C2 -->|Parse & Broadcast| C3
-    C1 -->|Monitor Inactivity| C4
-    C4 -->|Timeout| C5
-
-    class C1,C2,C3,C4,C5 messaging
-end
-
-subgraph Client Exit
-    D1(Client)
-    D2(UDP 'exit!')
-    D3(Program End)
-    D4(Timeout Removal)
-    D5(Server Management)
-
-    D1 -->|User typed exit| D2
-    D2 -->|Close Socket| D3
-    D1 -->|Server Timeout Notice| D4
-    D4 -->|Delete Room or Notify| D5
-
-    class D1,D2,D3,D4,D5 warning
+    B1 --> B2
+    B2 --> B3
+    B3 --> B4
+    B4 --> B5
 end
 
 A1 --> B1
 B1 --> C1
 C1 --> D1
 ```
+
+
 
 
 ## ✨ こだわりのポイント
