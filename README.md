@@ -179,6 +179,7 @@ C1 --> D1
 
 ### 📍 server.py のクラス図
 ```mermaid
+%%{init: {'themeVariables': {'scale': 0.8}}}%%
 classDiagram
 direction LR
 
@@ -220,6 +221,7 @@ class UDPServer {
 
 ### 📍 client.py のクラス図
 ```mermaid
+%%{init: {'themeVariables': {'scale': 0.8}}}%%
 classDiagram
 direction LR
 
