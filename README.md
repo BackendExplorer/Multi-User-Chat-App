@@ -221,7 +221,7 @@ class UDPServer {
 
 ### 📍 client.py のクラス図
 ```mermaid
-%%{init: {'themeVariables': {'scale': 0.4}}}%%
+%%{init: {'themeVariables': {'scale': 0.2}}}%%
 classDiagram
 direction LR
 
