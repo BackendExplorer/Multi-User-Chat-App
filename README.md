@@ -61,101 +61,102 @@
 
 # 📦 クラス図と構成
 
+## 📌 プロジェクト概要
 このプロジェクトは、**TCP/UDP通信を用いたチャットシステム** を構成するクラス群で成り立っています。サーバーとクライアントでそれぞれの役割を持ち、以下のように分類されます。
 
 ---
 
-## 1 クラス図
+## 🖼 クラス図
 
-### 1.1 server.py のクラス図
+### 📍 server.py のクラス図
 ```mermaid
 classDiagram
-    direction LR
+direction LR
 
-    TCPServer -- UDPServer
+TCPServer -- UDPServer
 
-    class TCPServer {
-        -HEADER_MAX_BYTE: int
-        -TOKEN_MAX_BYTE: int
-        -server_address: str
-        -server_port: int
-        -sock: socket
-        -room_members_map: dict
-        -clients_map: dict
-        +__init__(server_address: str, server_port: int)
-        +start_tcp_server(): None
-        -accept_tcp_connections(): None
-        -handle_client_request(connection: socket, client_address: tuple): None
-        -decode_message(data: bytes): tuple
-        -register_client(token: bytes, client_address: tuple, room_name: str, payload: str, operation: int): None
-        -create_room(connection: socket, room_name: str, payload: str, token: bytes): None
-        -join_room(connection: socket, room_name: str, payload: str, token: bytes): None
-    }
+class TCPServer {
+    - HEADER_MAX_BYTE: int
+    - TOKEN_MAX_BYTE: int
+    - server_address: str
+    - server_port: int
+    - sock: socket
+    - room_members_map: dict
+    - clients_map: dict
+    + __init__(server_address: str, server_port: int)
+    + start_tcp_server(): None
+    - accept_tcp_connections(): None
+    - handle_client_request(connection: socket, client_address: tuple): None
+    - decode_message(data: bytes): tuple
+    - register_client(token: bytes, client_address: tuple, room_name: str, payload: str, operation: int): None
+    - create_room(connection: socket, room_name: str, payload: str, token: bytes): None
+    - join_room(connection: socket, room_name: str, payload: str, token: bytes): None
+}
 
-    class UDPServer {
-        -server_address: str
-        -server_port: int
-        -room_members_map: dict
-        -clients_map: dict
-        -sock: socket
-        +__init__(server_address: str, server_port: int)
-        +start_udp_server(): None
-        -handle_messages(): None
-        -decode_message(data: bytes): tuple
-        -broadcast_message(room_name: str, message: str): None
-        -remove_inactive_clients(): None
-        -disconnect_inactive_client(client_token: bytes, client_info: list): None
-    }
+class UDPServer {
+    - server_address: str
+    - server_port: int
+    - room_members_map: dict
+    - clients_map: dict
+    - sock: socket
+    + __init__(server_address: str, server_port: int)
+    + start_udp_server(): None
+    - handle_messages(): None
+    - decode_message(data: bytes): tuple
+    - broadcast_message(room_name: str, message: str): None
+    - remove_inactive_clients(): None
+    - disconnect_inactive_client(client_token: bytes, client_info: list): None
+}
 ```
 
-### 1.2 client.py のクラス図
+### 📍 client.py のクラス図
 ```mermaid
 classDiagram
-    direction LR
+direction LR
 
-    TCPClient -- UDPClient
+TCPClient -- UDPClient
 
-    class TCPClient {
-        -server_address: str
-        -server_port: int
-        -sock: socket
-        -client_info: dict
-        +__init__(server_address: str, server_port: int)
-        +start_tcp_client(): dict
-        -connect_to_server(): None
-        -input_user_name(): str
-        -input_operation(): int
-        -create_room(username: str): tuple
-        -input_room_name(operation: int): str
-        -create_packet(room_name: str, operation: int, state: int, payload: str): bytes
-        -create_header(room_name: str, operation: int, state: int, payload: str): bytes
-        -join_room(username: str): tuple
-    }
+class TCPClient {
+    - server_address: str
+    - server_port: int
+    - sock: socket
+    - client_info: dict
+    + __init__(server_address: str, server_port: int)
+    + start_tcp_client(): dict
+    - connect_to_server(): None
+    - input_user_name(): str
+    - input_operation(): int
+    - create_room(username: str): tuple
+    - input_room_name(operation: int): str
+    - create_packet(room_name: str, operation: int, state: int, payload: str): bytes
+    - create_header(room_name: str, operation: int, state: int, payload: str): bytes
+    - join_room(username: str): tuple
+}
 
-    class UDPClient {
-        -server_address: str
-        -server_port: int
-        -sock: socket
-        -my_info: dict
-        -my_token: bytes
-        -room_name: str
-        +__init__(server_address: str, server_port: int, my_info: dict)
-        +start_udp_chat(): None
-        -send_username(): None
-        -send_message(): None
-        -receive_message(): None
-        -create_packet(message: bytes = b"" ): bytes
-    }
+class UDPClient {
+    - server_address: str
+    - server_port: int
+    - sock: socket
+    - my_info: dict
+    - my_token: bytes
+    - room_name: str
+    + __init__(server_address: str, server_port: int, my_info: dict)
+    + start_udp_chat(): None
+    - send_username(): None
+    - send_message(): None
+    - receive_message(): None
+    - create_packet(message: bytes = b"" ): bytes
+}
 ```
 
 ---
 
-## 2 クラスの構成
+## 🏗 クラスの構成
 
-### サーバープログラム
+### 🖥 サーバープログラム
 サーバー側のクラスは、**クライアントの接続管理、リクエスト処理、ルーム管理** などを担当します。
 
-#### TCPServer
+#### 🔹 TCPServer
 **概要**  
 TCP通信を介してクライアントからのリクエストを受け取り、適切な処理を実行します。
 
@@ -168,7 +169,7 @@ TCP通信を介してクライアントからのリクエストを受け取り�
 | ルームへの参加 | `join_room()` |
 | メッセージの解析 | `decode_message()` |
 
-#### UDPServer
+#### 🔹 UDPServer
 **概要**  
 UDP通信を介してメッセージを受信し、リレーまたは適切な処理を行います。
 
@@ -181,10 +182,10 @@ UDP通信を介してメッセージを受信し、リレーまたは適切な�
 
 ---
 
-### クライアントプログラム
+### 💻 クライアントプログラム
 クライアント側のクラスは、**サーバーとの通信、メッセージ送受信、ユーザーインターフェース** を担当します。
 
-#### TCPClient
+#### 🔹 TCPClient
 **概要**  
 TCP通信を介してサーバーにリクエストを送信し、レスポンスを受信します。
 
@@ -196,7 +197,7 @@ TCP通信を介してサーバーにリクエストを送信し、レスポン�
 | ルーム一覧の取得 | `input_room_name()` |
 | パケット作成 | `create_packet()` |
 
-#### UDPClient
+#### 🔹 UDPClient
 **概要**  
 UDP通信を介してメッセージを送受信します。
 
