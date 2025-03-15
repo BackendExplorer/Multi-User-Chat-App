@@ -59,9 +59,15 @@
 
 ## ⚙ 機能一覧
 
-## 📦 クラス図
+# 📦 クラス図と構成
 
-### 1. server.pyのクラス図
+このプロジェクトは、**TCP/UDP通信を用いたチャットシステム** を構成するクラス群で成り立っています。サーバーとクライアントでそれぞれの役割を持ち、以下のように分類されます。
+
+---
+
+## 1 クラス図
+
+### 1.1 server.py のクラス図
 ```mermaid
 classDiagram
     direction LR
@@ -101,7 +107,8 @@ classDiagram
         -disconnect_inactive_client(client_token: bytes, client_info: list): None
     }
 ```
-### 2. client.pyのクラス図
+
+### 1.2 client.py のクラス図
 ```mermaid
 classDiagram
     direction LR
@@ -137,82 +144,72 @@ classDiagram
         -send_username(): None
         -send_message(): None
         -receive_message(): None
-        -create_packet(message: bytes = b""): bytes
+        -create_packet(message: bytes = b"" ): bytes
     }
-
 ```
-
-
-## クラスの構成
-
-このプロジェクトは、**TCP/UDP通信を用いたチャットシステム** を構成するクラス群で成り立っています。  
-サーバーとクライアントでそれぞれの役割を持ち、以下のように分類されます。
 
 ---
 
-### 1. サーバープログラム
+## 2 クラスの構成
 
+### サーバープログラム
 サーバー側のクラスは、**クライアントの接続管理、リクエスト処理、ルーム管理** などを担当します。
 
-#### 1.1 TCPServer
-
+#### TCPServer
 **概要**  
 TCP通信を介してクライアントからのリクエストを受け取り、適切な処理を実行します。
 
 | 機能 | 説明 |
 |------|------|
-| クライアントからの接続受付 | `start_tcp_server` |
-| リクエスト処理 | `handle_client_request` |
-| クライアント情報の登録 | `register_client` |
-| ルームの作成 | `create_room` |
-| ルームへの参加 | `join_room` |
-| メッセージの解析 | `decode_message` |
+| クライアントからの接続受付 | `start_tcp_server()` |
+| リクエスト処理 | `handle_client_request()` |
+| クライアント情報の登録 | `register_client()` |
+| ルームの作成 | `create_room()` |
+| ルームへの参加 | `join_room()` |
+| メッセージの解析 | `decode_message()` |
 
-#### 1.2 UDPServer
-
+#### UDPServer
 **概要**  
 UDP通信を介してメッセージを受信し、リレーまたは適切な処理を行います。
 
 | 機能 | 説明 |
 |------|------|
-| クライアントからのメッセージ受信 | `handle_messages` |
-| メッセージの処理 | `decode_message` |
-| ルーム内のメンバーにメッセージをブロードキャスト | `broadcast_message` |
-| 非アクティブクライアントの削除 | `remove_inactive_clients` |
+| クライアントからのメッセージ受信 | `handle_messages()` |
+| メッセージの処理 | `decode_message()` |
+| ルーム内のメンバーにメッセージをブロードキャスト | `broadcast_message()` |
+| 非アクティブクライアントの削除 | `remove_inactive_clients()` |
 
 ---
 
-### 2. クライアントプログラム
-
+### クライアントプログラム
 クライアント側のクラスは、**サーバーとの通信、メッセージ送受信、ユーザーインターフェース** を担当します。
 
-#### 2.1 TCPClient
-
+#### TCPClient
 **概要**  
 TCP通信を介してサーバーにリクエストを送信し、レスポンスを受信します。
 
 | 機能 | 説明 |
 |------|------|
-| サーバー接続 | `connect_to_server` |
-| ルームの作成 | `create_room` |
-| ルームへの参加 | `join_room` |
-| ルーム一覧の取得 | `input_room_name` |
-| パケット作成 | `create_packet` |
+| サーバー接続 | `connect_to_server()` |
+| ルームの作成 | `create_room()` |
+| ルームへの参加 | `join_room()` |
+| ルーム一覧の取得 | `input_room_name()` |
+| パケット作成 | `create_packet()` |
 
-#### 2.2 UDPClient
-
+#### UDPClient
 **概要**  
 UDP通信を介してメッセージを送受信します。
 
 | 機能 | 説明 |
 |------|------|
-| ユーザー名の送信 | `send_username` |
-| メッセージの送信 | `send_message` |
-| メッセージの受信 | `receive_message` |
-| パケット作成 | `create_packet` |
+| ユーザー名の送信 | `send_username()` |
+| メッセージの送信 | `send_message()` |
+| メッセージの受信 | `receive_message()` |
+| パケット作成 | `create_packet()` |
 
 ---
 
+この構成をもとに、**シンプルかつ効率的なTCP/UDPチャットシステム** を実現しています。
 
 
 ## 🔀処理フロー (フローチャート)
