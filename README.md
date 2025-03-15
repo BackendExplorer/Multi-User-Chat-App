@@ -64,8 +64,6 @@
 ## 📌 プロジェクト概要
 このプロジェクトは、**TCP/UDP通信を用いたチャットシステム** を構成するクラス群で成り立っています。サーバーとクライアントでそれぞれの役割を持ち、以下のように分類されます。
 
----
-
 ## 🖼 クラス図
 
 ### 📍 server.py のクラス図
@@ -149,8 +147,6 @@ class UDPClient {
 }
 ```
 
----
-
 ## 🏗 クラスの構成
 
 ### 🖥 サーバープログラム
@@ -160,27 +156,23 @@ class UDPClient {
 **概要**  
 TCP通信を介してクライアントからのリクエストを受け取り、適切な処理を実行します。
 
-| 機能 | 説明 |
-|------|------|
-| クライアントからの接続受付 | `start_tcp_server()` |
-| リクエスト処理 | `handle_client_request()` |
-| クライアント情報の登録 | `register_client()` |
-| ルームの作成 | `create_room()` |
-| ルームへの参加 | `join_room()` |
-| メッセージの解析 | `decode_message()` |
+**機能**
+- クライアントからの接続受付: `start_tcp_server()`
+- リクエスト処理: `handle_client_request()`
+- クライアント情報の登録: `register_client()`
+- ルームの作成: `create_room()`
+- ルームへの参加: `join_room()`
+- メッセージの解析: `decode_message()`
 
 #### 🔹 UDPServer
 **概要**  
 UDP通信を介してメッセージを受信し、リレーまたは適切な処理を行います。
 
-| 機能 | 説明 |
-|------|------|
-| クライアントからのメッセージ受信 | `handle_messages()` |
-| メッセージの処理 | `decode_message()` |
-| ルーム内のメンバーにメッセージをブロードキャスト | `broadcast_message()` |
-| 非アクティブクライアントの削除 | `remove_inactive_clients()` |
-
----
+**機能**
+- クライアントからのメッセージ受信: `handle_messages()`
+- メッセージの処理: `decode_message()`
+- ルーム内のメンバーにメッセージをブロードキャスト: `broadcast_message()`
+- 非アクティブクライアントの削除: `remove_inactive_clients()`
 
 ### 💻 クライアントプログラム
 クライアント側のクラスは、**サーバーとの通信、メッセージ送受信、ユーザーインターフェース** を担当します。
@@ -189,26 +181,22 @@ UDP通信を介してメッセージを受信し、リレーまたは適切な�
 **概要**  
 TCP通信を介してサーバーにリクエストを送信し、レスポンスを受信します。
 
-| 機能 | 説明 |
-|------|------|
-| サーバー接続 | `connect_to_server()` |
-| ルームの作成 | `create_room()` |
-| ルームへの参加 | `join_room()` |
-| ルーム一覧の取得 | `input_room_name()` |
-| パケット作成 | `create_packet()` |
+**機能**
+- サーバー接続: `connect_to_server()`
+- ルームの作成: `create_room()`
+- ルームへの参加: `join_room()`
+- ルーム一覧の取得: `input_room_name()`
+- パケット作成: `create_packet()`
 
 #### 🔹 UDPClient
 **概要**  
 UDP通信を介してメッセージを送受信します。
 
-| 機能 | 説明 |
-|------|------|
-| ユーザー名の送信 | `send_username()` |
-| メッセージの送信 | `send_message()` |
-| メッセージの受信 | `receive_message()` |
-| パケット作成 | `create_packet()` |
-
----
+**機能**
+- ユーザー名の送信: `send_username()`
+- メッセージの送信: `send_message()`
+- メッセージの受信: `receive_message()`
+- パケット作成: `create_packet()`
 
 この構成をもとに、**シンプルかつ効率的なTCP/UDPチャットシステム** を実現しています。
 
